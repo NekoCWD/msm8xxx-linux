@@ -62,6 +62,29 @@
 		};
 	};
 
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		pinctrl-0 = <&gpio_leds_default>;
+		pinctrl-names = "default";
+
+		led-red {
+			gpios = <&tlmm 25 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_RED>;
+			default-state = "off";
+			function = LED_FUNCTION_INDICATOR;
+			retain-state-suspended;
+		};
+
+		led-green {
+			gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_GREEN>;
+			default-state = "off";
+			function = LED_FUNCTION_INDICATOR;
+			retain-state-suspended;
+		};
+	};
+
 	reserved-memory {
 		framebuffer_mem: memory@90000000 {
 			reg = <0x0 0x90001000 0x0 (800 * 1280 * 3)>;
@@ -431,6 +454,14 @@ bias-disable;
 
 	vibrator_en_default: vibrator-en-default-state {
 		pins = "gpio2";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+		output-low;
+	};
+
+	gpio_leds_default: gpio-leds-default-state {
+		pins = "gpio23", "gpio25";
 		function = "gpio";
 		drive-strength = <2>;
 		bias-disable;
