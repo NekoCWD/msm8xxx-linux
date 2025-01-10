@@ -85,6 +85,14 @@
 		regulator-always-on;
 	};
 
+	vibrator {
+		compatible = "gpio-vibrator";
+		enable-gpios = <&tlmm 9 GPIO_ACTIVE_HIGH>;
+
+		pinctrl-0 = <&vibrator_en_default>;
+		pinctrl-names = "default";
+	};
+
 	vph_pwr: regulator-vph-pwr {
 		compatible = "regulator-fixed";
 		regulator-name = "vph_pwr";
@@ -419,6 +427,14 @@
 		function = "gpio";
 		drive-strength = <2>;
 bias-disable;
+	};
+
+	vibrator_en_default: vibrator-en-default-state {
+		pins = "gpio2";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+		output-low;
 	};
 };
 
