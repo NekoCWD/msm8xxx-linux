@@ -125,6 +125,13 @@
 		regulator-boot-on;
 	};
 
+	usb_id: usb-id {
+		compatible = "linux,extcon-usb-gpio";
+		id-gpios = <&tlmm 48 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usb_id_default>;
+	};
+
 };
 
 &adsp_mem {
@@ -373,11 +380,6 @@
 			regulator-max-microvolt = <1200000>;
 		};
 	};
-
-	usb_vbus: extcon-usb-dummy {
-		compatible = "linux,extcon-usb-dummy";
-	};
-
 };
 
 &sdhc_1 {
@@ -467,15 +469,25 @@ bias-disable;
 		bias-disable;
 		output-low;
 	};
+
+	usb_id_default: usb-id-default-state {
+		pins = "gpio48";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+		input-enable;
+	};
 };
 
 &usb {
-	dr_mode = "peripheral";
-	extcon = <&usb_vbus>;
+	dr_mode = "otg";
+	extcon = <&charger>, <&usb_id>;
+	vbus-supply = <&usb_otg_vbus>;
 	status = "okay";
 };
 
 &usb_hs_phy {
+	extcon = <&charger>;
 	vdd-supply = <&pm8937_l2>;
 	vdda1p8-supply = <&pm8937_l7>;
 	vdda3p3-supply = <&pm8937_l13>;
