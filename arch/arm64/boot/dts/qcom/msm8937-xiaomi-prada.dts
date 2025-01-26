@@ -506,7 +506,7 @@
 };
 
 &tlmm {
-	gpio-reserved-ranges = <0 4>, <20 4>;
+	gpio-reserved-ranges = <0 4>; //, <20 4>;
 
 	gpio_keys_default: gpio-keys-default-state {
 		pins = "gpio91";
@@ -613,6 +613,12 @@
 &xo_board {
 	clock-frequency = <19200000>;
 };
+
+&blsp2_spi2 {
+
+	status="okay";
+};
+
 &modem {
 	pll-supply = <&pm8937_l7>;
 
