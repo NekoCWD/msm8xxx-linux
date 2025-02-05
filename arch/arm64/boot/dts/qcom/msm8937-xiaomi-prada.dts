@@ -436,8 +436,9 @@
 		};
 
 		pm8937_l17: l17 {
-			regulator-min-microvolt = <2800000>;
+			regulator-min-microvolt = <2850000>;
 			regulator-max-microvolt = <2900000>;
+			regulator-always-on;
 		};
 
 		pm8937_l19: l19 {
@@ -448,11 +449,13 @@
 		pm8937_l22: l22 {
 			regulator-min-microvolt = <2800000>;
 			regulator-max-microvolt = <2800000>;
+			regulator-always-on;
 		};
 
 		pm8937_l23: l23 {
 			regulator-min-microvolt = <1200000>;
 			regulator-max-microvolt = <1200000>;
+			regulator-always-on;
 		};
 	};
 };
@@ -692,6 +695,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&cci1_default>,
 				<&cci0_default>,
+				<&camss_mclk0_default>,
 				<&camss_mclk2_default>;
 
 	status = "okay";
