@@ -903,6 +903,17 @@ config VIDEO_LC898217XC
 	  LC898217XC is a 11 bit DAC with 110mA output current sink
 	  capability. This is designed for linear control of
 	  voice coil motors, controlled via I2C serial interface.
+
+config VIDEO_SA3103
+	tristate "SA3103 lens voice coil support"
+	depends on I2C && VIDEO_DEV
+	select MEDIA_CONTROLLER
+	select VIDEO_V4L2_SUBDEV_API
+	select V4L2_ASYNC
+	help
+	  This is a driver for the SA3103 camera lens voice coil.
+	  SA3103 is a 11 bit DAC. This is designed for linear control of
+	  voice coil motors, controlled via I2C serial interface.
 endmenu
 
 menu "Flash devices"
