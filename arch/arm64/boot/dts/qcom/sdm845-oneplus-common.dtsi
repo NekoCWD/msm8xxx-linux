@@ -650,9 +650,9 @@
 };
 
 &cci_i2c1 {
-	sub_cam_actuator: actuator@74 {
-		compatible = "onnn,lc898217xc";
-		reg = <0x74>;
+	sub_cam_actuator: actuator@d {
+		compatible = "sa,sa3103";
+		reg = <0x0d>;
 		vcc-supply = <&sub_cam_vaf>;
 	};
 
