@@ -103,43 +103,6 @@
 		regulator-always-on;
 	};
 
-	sensors: i2c-gpio {
-		// i2c4 is protected, bitbanging
-		compatible = "i2c-gpio";
-		sda-gpios = <&tlmm 14 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-		scl-gpios = <&tlmm 15 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-		i2c-gpio,delay-us = <2>;        /* ~100 kHz */
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		light@23 {
-			compatible = "liteon,ltr559";
-			reg = <0x23>;
-
-			vdd-supply = <&pm8937_l17>;
-			vddio-supply = <&pm8937_l6>;
-		};
-
-		magnetometer@2e {
-			compatible = "yamaha,yas537";
-			reg = <0x2e>;
-
-			vdd-supply = <&pm8937_l6>;
-		};
-
-		imu@68 {
-			compatible = "bosch,bmi120";
-			reg = <0x68>;
-
-			vdd-supply = <&pm8937_l10>;
-			vddio-supply = <&pm8937_l6>;
-
-			mount-matrix =	"0", "-1", "0",
-					"1", "0", "0",
-					"0", "0", "1";
-		};
-	};
-
 	reserved-memory {
 		reserved@84f00000 {
 			reg = <0x0 0x84f00000 0x0 0x1400000>;
