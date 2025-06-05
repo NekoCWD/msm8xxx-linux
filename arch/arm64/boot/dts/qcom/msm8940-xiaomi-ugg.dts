@@ -12,6 +12,8 @@
 #include "pm8937.dtsi"
 #include "msm8937-qdsp6.dtsi"
 
+/delete-node/ &qseecom_mem;
+
 / {
 	model = "Xiaomi Redmi Note 5A Prime (ugg)";
 	compatible = "xiaomi,ugg", "qcom,msm8940";
@@ -120,9 +122,7 @@
 	};
 
 	reserved-memory {
-		/delete-node/ reserved@85b00000;
-
-		reserved@84a00000 {
+		qseecom_mem: qseecom@84a00000 {
 			reg = <0x0 0x84a00000 0x0 0x1900000>;
 			no-map;
 		};
@@ -154,7 +154,6 @@
 &apr {
 	status = "okay";
 };
-
 
 &blsp1_i2c2 {
 	status = "okay";
@@ -198,6 +197,27 @@
 
 		touchscreen-size-x = <720>;
 		touchscreen-size-y = <1280>;
+
+		status = "disabled";
+	};
+
+	touchscreen@5d {
+		compatible = "goodix,gt911";
+		reg = <0x5d>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <65 IRQ_TYPE_EDGE_FALLING>;
+		irq-gpios = <&tlmm 65 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+		AVDD28-supply = <&pm8937_l10>;
+		VDDIO-supply = <&pm8937_l6>;
+
+		pinctrl-0 = <&tsp_int_rst_default>;
+		pinctrl-names = "default";
+
+		touchscreen-size-x = <720>;
+		touchscreen-size-y = <1280>;
+
+		status = "disabled";
 	};
 };
 
@@ -358,6 +378,8 @@
 		pm8937_l11: l11 {
 			regulator-min-microvolt = <2950000>;
 			regulator-max-microvolt = <2950000>;
+			regulator-allow-set-load;
+			regulator-system-load = <200000>;
 		};
 
 		pm8937_l12: l12 {
@@ -419,6 +441,7 @@
 	vqmmc-supply = <&pm8937_l12>;
 	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
 	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
+	pinctrl-names = "default", "sleep";
 	status = "okay";
 };
 
