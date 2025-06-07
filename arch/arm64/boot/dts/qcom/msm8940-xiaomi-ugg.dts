@@ -121,6 +121,11 @@
 		regulator-always-on;
 	};
 
+	irled {
+		compatible = "pwm-ir-tx";
+		pwms = <&pm8937_pwm 0 0>;
+	};
+
 	reserved-memory {
 		qseecom_mem: qseecom@84a00000 {
 			reg = <0x0 0x84a00000 0x0 0x1900000>;
@@ -131,6 +136,11 @@
 			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
 			no-map;
 		};
+	};
+
+	vibrator {
+		compatible = "gpio-vibrator";
+		enable-gpios = <&tlmm 9 GPIO_ACTIVE_HIGH>;
 	};
 
 	vph_pwr: vph-pwr-regulator {
@@ -291,6 +301,24 @@
 &mdss_dsi0_phy {
 	vddio-supply = <&pm8937_l6>;
 	qcom,dsi-phy-regulator-ldo-mode;
+
+	status = "okay";
+};
+
+&pm8937_gpios {
+	pwm_enable_default: pwm-enable-default-state {
+		pins = "gpio6";
+		function = "dtest2";
+		output-low;
+		bias-pull-down;
+		qcom,drive-strength = <2>;
+	};
+};
+
+&pm8937_pwm {
+	qcom,dtest = <2 2>;
+	pinctrl-0 = <&pwm_enable_default>;
+	pinctrl-names = "default";
 
 	status = "okay";
 };
